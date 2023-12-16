@@ -1,0 +1,43 @@
+# UCF101 data preparation
+
+mkdir data
+
+cd data
+wget https://www.crcv.ucf.edu/data/UCF101/UCF101.rar --no-check-certificate
+
+unrar x UCF101.rar
+rm -rf UCF101.rar
+
+wget https://www.crcv.ucf.edu/data/UCF101/UCF101TrainTestSplits-RecognitionTask.zip --no-check-certificate
+
+unzip UCF101TrainTestSplits-RecognitionTask.zip
+rm -rf UCF101TrainTestSplits-RecognitionTask.zip
+
+
+# PreTraining SSCLModel
+
+cd /home/multi-sy-20/PycharmProjects/MS_SSCL_VC_AR_VinayKumar
+source venv_SSCL/bin/activate
+cd PreTraining/
+python3 train_gen_all_step.py --run_id="EXP_1"
+python3 train_gen_all_step.py --run_id="SS_CL_VC_AR_EXP_1_Ep500"
+
+
+# Fine Tuning SSCLModel
+
+cd FineTuning/
+python train.py --saved_model="FULL/PATH/TO/SAVED/PRETRAINED/MODEL" --linear
+
+python3 train.py --saved_model="/home/multi-sy-20/PycharmProjects/MS_SSCL_VC_AR_VinayKumar/model_best_e300_loss_4.2199.pth" --linear --run_id="FineTune_SS_CL_VC_AR_EXP_1_Dp_0.3_Ep100"
+
+python3 train.py --saved_model="/home/multi-sy-20/PycharmProjects/MS_SSCL_VC_AR_VinayKumar/model_best_e300_loss_4.2199.pth" --linear --run_id="FineTune_SS_CL_VC_AR_EXP_2_Dp_0.4_Ep100"
+
+python3 train.py --saved_model="/home/multi-sy-20/PycharmProjects/MS_SSCL_VC_AR_VinayKumar/model_best_e300_loss_4.2199.pth" --linear --run_id="FineTune_SS_CL_VC_AR_EXP_3_Dp_0.5_lr_1e-4_Ep100"
+
+python3 train.py --saved_model="/home/multi-sy-20/PycharmProjects/MS_SSCL_VC_AR_VinayKumar/model_best_e300_loss_4.2199.pth" --linear --run_id="FineTune_SS_CL_VC_AR_EXP_4_Dp_0.7_Ep100"
+
+python3 train.py --saved_model="/home/multi-sy-20/PycharmProjects/MS_SSCL_VC_AR_VinayKumar/model_best_e300_loss_4.2199.pth" --linear --run_id="FineTune_SS_CL_VC_AR_EXP_5_Dp_0.8_lr_1e-5_Ep100"
+
+python3 train.py --saved_model="/home/multi-sy-20/PycharmProjects/MS_SSCL_VC_AR_VinayKumar/model_best_e300_loss_4.2199.pth" --linear --run_id="FineTune_SS_CL_VC_AR_EXP_6_Dp_0.9_lr_1e-5_Ep100"
+
+python3 train.py --saved_model="/home/multi-sy-20/PycharmProjects/MS_SSCL_VC_AR_VinayKumar/model_best_e300_loss_4.2199.pth" --linear --run_id="FineTune_SS_CL_VC_AR_EXP_7_Dp_1.0_lr_1e-5_Ep100"
